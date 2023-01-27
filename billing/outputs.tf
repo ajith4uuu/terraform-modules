@@ -1,34 +1,20 @@
-# Terragrunt will copy the Terraform configurations specified by the source parameter, along with any files in the
-# working directory, into a temporary folder, and execute your Terraform commands in that folder.
-locals {
-}
+/**
+ * Copyright 2018 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-terraform {
-  source = "github.com/colt-net/terraform-modules//stacks/iam_project?ref=v1.0.13"
-
-}
-
-# Include all settings from the root terragrunt.hcl file
-include {
-  path = find_in_parent_folders("org.hcl")
-}
-
-dependency "parent" {
-  config_path = "../../NQ10043558/"
-  mock_outputs = {
-    project = {
-      project_id = "NQ10043558"
-    }
-  }
-}
-
-# These are the variables we have to pass in to use the module specified in the terragrunt configuration above
-inputs = {
-
-  project_id = dependency.parent.outputs.project.project_id
-
-  editor_members = [
-    "user:admin.ajith@sb.gcp.telefonica.de",
-  ]
-
+output "name" {
+  description = "Resource name of the budget. Values are of the form `billingAccounts/{billingAccountId}/budgets/{budgetId}.`"
+  value       = length(google_billing_budget.budget) > 0 ? google_billing_budget.budget[0].name : ""
 }
