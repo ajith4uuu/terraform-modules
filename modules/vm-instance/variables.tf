@@ -1,23 +1,31 @@
 variable "project_id" {
-  description = "GCP Project ID"
-  type        = string
-  default     = "lent-shr-terraform-4109"
+  description = "Google Cloud Project ID"
 }
 
 variable "region" {
-  description = "GCP Region"
-  type        = string
-  default     = "asia-south1"
+  description = "GCP region for the VM"
+  default     = "us-central1"
 }
 
 variable "zone" {
-  description = "GCP Zone"
-  type        = string
-  default     = "asia-south1-b"
+  description = "GCP zone for the VM"
+  default     = "us-central1-a"
 }
 
-variable "vm_name" {
-  description = "VM Name"
-  type        = string
-  default     = "cicd-test"
+variable "instance_name" {
+  description = "Name of the VM instance"
+}
+
+variable "machine_type" {
+  description = "Machine type for the VM"
+  default     = "n1-standard-1"
+}
+
+variable "image" {
+  description = "VM image"
+  default     = "ubuntu-os-cloud/ubuntu-2004-lts"
+}
+
+variable "network" {
+  description = "GCP network name"
 }
