@@ -1,18 +1,29 @@
 provider "google" {
-  project     = "lent-shr-terraform-4109"
-  region      = "asia-south1"
-  zone        = "asia-south1-b"
+  credentials = file("path/to/credentials.json")
+  project     = var.project_id
+  region      = var.region
 }
 
 resource "google_compute_instance" "vm_instance" {
-  name         = "cicd-test"
-  machine_type = "n1-standard-1"
+  name         = var.instance_name
+  machine_type = var.machine_type
+  zone         = var.zone
+
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-10"
+      image = var.image
     }
   }
+
   network_interface {
-    network = "default"
+    network = var.network
+
+    access_config {
+      // Optional: If you want to assign a public IP to the VM
+    }
   }
+}
+
+output "instance_ip" {
+  value = google_compute_instance.vm_instance.network_interface[0].access_config[0].nat_ip
 }
